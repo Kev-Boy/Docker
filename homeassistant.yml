@@ -1,0 +1,19 @@
+version: '3' 
+volumes: 
+  data: 
+  media:
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: "homeassistant/home-assistant:stable" 
+    ports:
+     - "8123:8123/tcp" 
+    volumes:
+     - "data:/config"
+     - "media:/media"
+     - /run/audio:/run/audio:ro
+     - /run/dbus:/run/dbus:ro
+    restart: unless-stopped 
+    environment:
+      TZ: Europe/Berlin
+    privileged: true
