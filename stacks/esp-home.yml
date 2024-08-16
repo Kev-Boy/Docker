@@ -12,6 +12,7 @@ services:
     restart: always
     privileged: true
 
-    environment:
+    env_file:
+      - stack.env
 #      - USERNAME=<Username>
 #      - PASSWORD=<Passwort>
