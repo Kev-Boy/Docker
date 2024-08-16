@@ -13,6 +13,6 @@ services:
     privileged: true
 
     env_file:
-      - stack.env
+      - ../stack.env
 #      - USERNAME=<Username>
 #      - PASSWORD=<Passwort>
