@@ -1,0 +1,17 @@
+version: '3'
+services:
+  esphome:
+    container_name: esp-home
+    image: esphome/esphome:stable
+    ports:
+      - "6053:6053/tcp"
+      - "6052:6052/tcp"
+      - "8266:8266/tcp"
+    volumes:
+      - "/docker/esp-home:/config"
+    restart: always
+    privileged: true
+
+    environment:
+#      - USERNAME=<Username>
+#      - PASSWORD=<Passwort>

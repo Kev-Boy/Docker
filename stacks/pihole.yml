@@ -1,0 +1,29 @@
+version: "3"
+
+# Mehr Infos auf https://github.com/pi-hole/docker-pi-hole/ und https://docs.pi-hole.net/
+services:
+  pihole:
+   container_name: pihole # Der Name des Containers wie er in Portainer unter "Containers" angezeigt wird
+   image: pihole/pihole:latest # Download des offiziellen Pihole-Images
+   hostname: Pihole # Diese Bezeichnung steht später oben rechts in der Weboberfläche von Pihole als Hostname
+   dns:
+     - 127.0.0.1
+     - 8.8.8.8
+   # Für DHCP wird empfohlen, die folgenden Ports zu entfernen und stattdessen hinzuzufügen: network_mode: "host"
+   ports:
+    - "53:53/tcp"
+    - "53:53/udp"
+    - "67:67/udp" # Wird nur benötigt, wenn ihr Pi-hole als DHCP-Server nutzen wollt
+    - "80:80/tcp"
+   environment:
+    TZ: 'Europe/Berlin' # Die Zeitzone wird auf Deutschland gestellt
+   # WEBPASSWORD: '<Passwort>' # Das Passwort, mit dem ihr euch an der Pihole-Weboberfläche anmeldet
+    PIHOLE_DNS_: '8.8.8.8;1.1.1.1' # Stellt in Pihole "Quad9 (filtered, DNSSEC)" als Upstream-DNS-Server ein statt Google
+    REV_SERVER_TARGET: '192.168.178.1' # If conditional forwarding is enabled, set the IP of the local network router
+   # "Volumes" speichert Daten zwischen Container-Upgrades
+   volumes:
+    - '/docker/pihole/config:/etc/pihole'
+    - '/docker/pihole/etc-dnsmasq.d:/etc/dnsmasq.d'
+   cap_add: # Wird nur benötigt, wenn ihr Pi-hole als DHCP-Server nutzen wollt
+    - NET_ADMIN # Wird nur benötigt, wenn ihr Pi-hole als DHCP-Server nutzen wollt
+   restart: unless-stopped # Wenn ihr den Container stoppt, startet er nicht automatisch neu

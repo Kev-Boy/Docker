@@ -1,0 +1,13 @@
+version: "3"
+services:
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /docker/watchtower/docker.sock:/var/run/docker.sock
+    restart: always
+    environment:
+      WATCHTOWER_SCHEDULE: 0 0 3 * * *
+      TZ: Europe/Berlin
+      WATCHTOWER_CLEANUP: "true"
+      WATCHTOWER_DEBUG: "true"
+      
