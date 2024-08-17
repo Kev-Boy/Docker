@@ -1,0 +1,47 @@
+version: "3"
+
+name: duplicati
+services:
+  duplicati: 
+    image: lscr.io/linuxserver/duplicati:latest
+    container_name: duplicati
+    ports:
+      - 5020:8200 # Port for Web-login
+    privileged: false # root rights
+    restart: on-failure:3
+    volumes:
+      - /sharedDockerFolder/duplicati/appdata/config:/config
+      - /sharedDockerFolder/duplicati/backups:/backups
+      - /sharedDockerFolder/duplicati/source:/source
+
+      # Watchtower
+      - "/sharedDockerFolder/watchtower/docker.sock:/sharedDockerFolder/watchtower/docker.sock"
+      # Duplicati
+      - /sharedDockerFolder/duplicati/appdata/config:/sharedDockerFolder/duplicati/config
+      - /sharedDockerFolder/duplicati/backups:/sharedDockerFolder/duplicati/backups
+      - /sharedDockerFolder/duplicati/source:/sharedDockerFolder/duplicati/source
+
+      # Homeassistant
+      - "/sharedDockerFolder/homeassistant/data:/sharedDockerFolder/homeassistant/config"
+      - "/sharedDockerFolder/homeassistant/media:/sharedDockerFolder/homeassistant/media"
+      # Esp-Home
+      - "/sharedDockerFolder/esp-home/config:/sharedDockerFolder/esp-home/config"
+      # Mosquitto
+      - "/sharedDockerFolder/mosquitto/data:/sharedDockerFolder/mosquitto/config"
+      - "/sharedDockerFolder/mosquitto/data:/sharedDockerFolder/mosquitto/data"
+      - "/sharedDockerFolder/mosquitto/data:/sharedDockerFolder/mosquitto/log"
+
+      # Pihole
+      - "/sharedDockerFolder/pihole/config:/sharedDockerFolder/pihole/config"
+      - "/sharedDockerFolder/pihole/etc-dnsmasq.d:/sharedDockerFolder/pihole/config/dnsmasq.d"
+
+      #Paperless
+      - "/sharedDockerFolder/paperless/data:/sharedDockerFolder/paperless/data"
+      - "/sharedDockerFolder/paperless/media:/sharedDockerFolder/paperless/media"
+      - "/sharedDockerFolder/paperless/export:/sharedDockerFolder/paperless/export"
+      - "/sharedDockerFolder/paperless/consume:/sharedDockerFolder/paperless/consume"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      - CLI_ARGS= #optional

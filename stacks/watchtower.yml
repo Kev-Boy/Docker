@@ -1,10 +1,12 @@
 version: "3"
+
+name: watchtower
 services:
   watchtower:
     image: containrrr/watchtower
+    restart: unless-stopped
     volumes:
-      - /docker/watchtower/docker.sock:/var/run/docker.sock
-    restart: always
+      - /sharedDockerFolder/watchtower/docker.sock:/var/run/docker.sock
     environment:
       WATCHTOWER_SCHEDULE: 0 0 3 * * *
       TZ: Europe/Berlin
