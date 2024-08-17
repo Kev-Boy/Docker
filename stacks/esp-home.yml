@@ -1,18 +1,20 @@
-version: '3'
+version: "3"
+
+name: esp-home
 services:
   esphome:
     container_name: esp-home
     image: esphome/esphome:stable
     ports:
-      - "6053:6053/tcp"
-      - "6052:6052/tcp"
-      - "8266:8266/tcp"
-    volumes:
-      - "/docker/esp-home:/config"
-    restart: always
+      - "6053:6053/tcp" # Port for ESP-connection
+      - "8010:6052/tcp" # Port for Web-login
+      - "8266:8266/tcp" # Port for ESP-connection
     privileged: true
-
+    restart: on-failure:3
+    volumes:
+      - "/sharedDockerFolder/esp-home/config:/config"
     env_file:
       - ../stack.env
-#      - USERNAME=<Username>
-#      - PASSWORD=<Passwort>
+# Environment variables on Portainer to be filled:
+# USERNAME=<Username>
+# PASSWORD=<Passwort>

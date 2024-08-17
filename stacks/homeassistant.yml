@@ -1,19 +1,18 @@
-version: '3' 
-volumes: 
-  data: 
-  media:
+version: "3"
+
+name: homeassistant
 services:
   homeassistant:
     container_name: homeassistant
-    image: "homeassistant/home-assistant:stable" 
+    image: "homeassistant/home-assistant:stable"
     ports:
-     - "8030:8123/tcp" 
+      - "8000:8123/tcp" # Port for Web-login
+    privileged: true
+    restart: on-failure:3
     volumes:
-     - "data:/config"
-     - "media:/media"
-     - /run/audio:/run/audio:ro
-     - /run/dbus:/run/dbus:ro
-    restart: unless-stopped 
+      - "/sharedDockerFolder/homeassistant/data:/config"
+      - "/sharedDockerFolder/homeassistant/media:/media"
+      - /run/audio:/run/audio:ro
+      - /run/dbus:/run/dbus:ro
     environment:
       TZ: Europe/Berlin
-    privileged: true
