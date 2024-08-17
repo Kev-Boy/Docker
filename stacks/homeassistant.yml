@@ -1,4 +1,7 @@
 version: '3' 
+volumes: 
+  data: 
+  media:
 services:
   homeassistant:
     container_name: homeassistant
@@ -6,8 +9,8 @@ services:
     ports:
      - "8030:8123/tcp" 
     volumes:
-     - "/docker/homeassistent/data:/config"
-     - "/docker/homeassistent/media:/media"
+     - "data:/config"
+     - "media:/media"
      - /run/audio:/run/audio:ro
      - /run/dbus:/run/dbus:ro
     restart: unless-stopped 
