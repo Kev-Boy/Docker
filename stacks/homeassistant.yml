@@ -10,9 +10,7 @@ services:
     privileged: true
     restart: on-failure:3
     volumes:
-      - "/sharedDockerFolder/homeassistant/data:/config"
-      - "/sharedDockerFolder/homeassistant/media:/media"
-      - /run/audio:/run/audio:ro
-      - /run/dbus:/run/dbus:ro
+      - "/var/lib/docker/volumes/sharedDockerFolder/_data/homeassistant/data:/config"
+      - "/var/lib/docker/volumes/sharedDockerFolder/_data/homeassistant/media:/media"
     environment:
       TZ: Europe/Berlin

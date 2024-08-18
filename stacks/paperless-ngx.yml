@@ -54,10 +54,10 @@ services:
       - "7000:8000"
     restart: on-failure:3
     volumes:
-      - /sharedDockerFolder/paperless/data:/usr/src/paperless/data
-      - /sharedDockerFolder/paperless/media:/usr/src/paperless/media
-      - /sharedDockerFolder/paperless/export:/usr/src/paperless/export
-      - /sharedDockerFolder/paperless/consume:/usr/src/paperless/consume
+      - /var/lib/docker/volumes/sharedDockerFolder/_data/paperless/data:/usr/src/paperless/data
+      - /var/lib/docker/volumes/sharedDockerFolder/_data/paperless/media:/usr/src/paperless/media
+      - /var/lib/docker/volumes/sharedDockerFolder/_data/paperless/export:/usr/src/paperless/export
+      - /var/lib/docker/volumes/sharedDockerFolder/_data/paperless/consume:/usr/src/paperless/consume
     environment:
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_DBHOST: db

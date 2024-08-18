@@ -13,8 +13,8 @@ services:
       - "9010:80/tcp" # Port for Web-login
     restart: always # Startet immer neu
     volumes: # "Volumes" speichert Daten zwischen Container-Upgrades
-      - "/sharedDockerFolder/pihole/config:/etc/pihole"
-      - "/sharedDockerFolder/pihole/etc-dnsmasq.d:/etc/dnsmasq.d"
+      - "/var/lib/docker/volumes/sharedDockerFolder/_data/pihole/config:/etc/pihole"
+      - "/var/lib/docker/volumes/sharedDockerFolder/_data/pihole/etc-dnsmasq.d:/etc/dnsmasq.d"
     environment:
       TZ: "Europe/Berlin" # Die Zeitzone wird auf Deutschland gestellt
       PIHOLE_DNS_: "8.8.8.8;1.1.1.1" # Stellt in Pihole "Quad9 (filtered, DNSSEC)" als Upstream-DNS-Server ein statt Google

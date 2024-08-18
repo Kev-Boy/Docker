@@ -10,9 +10,9 @@ services:
     restart: on-failure:3
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
-      - "/sharedDockerFolder/mosquitto/data:/mosquitto/config"
-      - "/sharedDockerFolder/mosquitto/data:/mosquitto/data"
-      - "/sharedDockerFolder/mosquitto/data:/mosquitto/log"
+      - "/var/lib/docker/volumes/sharedDockerFolder/_data/mosquitto/config:/mosquitto/config"
+      - "/var/lib/docker/volumes/sharedDockerFolder/_data/mosquitto/data:/mosquitto/data"
+      - "/var/lib/docker/volumes/sharedDockerFolder/_data/mosquitto/log:/mosquitto/log"
     environment:
       - "TZ=Europe/Berlin"
     hostname: "ubmqtt"

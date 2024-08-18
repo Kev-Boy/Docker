@@ -6,7 +6,7 @@ services:
     image: containrrr/watchtower
     restart: unless-stopped
     volumes:
-      - /sharedDockerFolder/watchtower/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes/sharedDockerFolder/_data/watchtower/docker.sock:/var/run/docker.sock
     environment:
       WATCHTOWER_SCHEDULE: 0 0 3 * * *
       TZ: Europe/Berlin
