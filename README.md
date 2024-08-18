@@ -45,7 +45,7 @@ Installation for the business edition..
 source: https://docs.portainer.io/start/install-ce/server/docker/linux
 
 - ```docker volume create portainer_data```
-- ```sudo docker run -d -p 8010:8000 -p 8020:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest```
+- ```sudo docker run -d -p 5001:8000 -p 5000:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ee:latest```
 
 
 ## Uninstallation
@@ -53,10 +53,7 @@ source: https://docs.portainer.io/start/install-ce/server/docker/linux
 - ```sudo docker rm portainer```
 - ```sudo docker volume rm portainer_data```
 
-| Commands                                                                                                                                                                                | Description                         |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
-| ```sudo docker volume create portainer_data```                                                                                                                                          | creates the volume for Portainer    |
-| ```sudo docker run -d -p 5001:8000 -p 5000:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest``` | Start Portainer with the arguments. |
+
 
 ## Commands
 
