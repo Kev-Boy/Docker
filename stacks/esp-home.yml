@@ -12,7 +12,7 @@ services:
     privileged: true
     restart: on-failure:3
     volumes:
-      - "/sharedDockerFolder/esp-home/config:/config"
+      - "/var/lib/docker/volumes/sharedDockerFolder/_data/esp-home/config:/config"
     env_file:
       - ../stack.env
 # Environment variables on Portainer to be filled:
