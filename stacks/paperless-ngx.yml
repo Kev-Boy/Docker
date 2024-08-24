@@ -36,13 +36,13 @@ services:
     image: docker.io/library/redis:7
     restart: on-failure:3
     volumes:
-      - /sharedDockerFolder/paperless/redisdata:/data
+      - /var/lib/docker/volumes/sharedDockerFolder/_data/paperless/redisdata:/data
 
   db:
     image: docker.io/library/postgres:15
     restart: on-failure:3
     volumes:
-      - /sharedDockerFolder/paperless/pgdata:/var/lib/postgresql/data
+      - /var/lib/docker/volumes/sharedDockerFolder/_data/paperless/pgdata:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: paperless
       POSTGRES_USER: paperless
