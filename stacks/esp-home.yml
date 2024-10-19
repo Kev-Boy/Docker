@@ -1,17 +1,29 @@
 services:
-  esphome:
-    container_name: git_esp-home
-    image: esphome/esphome:stable
-    ports:
-      - "6053:6053/tcp" # Port for ESP-connection
-      - "8010:6052/tcp" # Port for Web-login
-      - "8266:8266/tcp" # Port for ESP-connection
-    privileged: true
-    restart: on-failure:3
+  esphome:  # The service name
+    container_name: git_esp-home  # The name of the container
+    image: esphome/esphome:stable  # Use the stable version of the esphome image
+#    ports: # Attention! If the network has external networks, the ports option will be ignored!
+#      - "6053:6053/tcp" # Port for ESP-connection
+#      - "8010:6052/tcp" # Port for web login
+#      - "8266:8266/tcp" # Port for ESP-connection
+    privileged: true  # Run the container in privileged mode
+    restart: on-failure:3  # Restart the container up to 3 times if it fails
     volumes:
-      - "/var/lib/docker/volumes/sharedDockerFolder/_data/esp-home/config:/config"
-    env_file:
-      - stack.env
+      - "/var/lib/docker/volumes/sharedDockerFolder/_data/esp-home/config:/config"  # Mount the host directory for ESPHome config data into the container
+    networks:
+      onlyVip: 
+        ipv4_address: 192.168.32.202  # Assign a static IP address on the onlyVip network
+      iotLocal:
+        ipv4_address: 192.168.96.202  # Assign a static IP address on the iotLocal network
+
+networks:  # Define the custom networks
+  onlyVip:
+    name: "mvl-500-onlyVIP-Creation"  # Name of the external network onlyVip
+    external: true  # Indicates that the network is managed outside of Docker Compose
+  iotLocal:
+    name: "mvl-x20-IoT-Local-Creation"  # Name of the external network iotLocal
+    external: true  # Indicates that the network is managed outside of Docker Compose
+
 # Environment variables on Portainer to be filled:
 # USERNAME=<Username>
-# PASSWORD=<Passwort>
+# PASSWORD=<Password>
