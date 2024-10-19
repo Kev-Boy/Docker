@@ -1,0 +1,10 @@
+services:
+  uptime-kuma:  # The service name
+    container_name: git_uptime-kuma  # The name of the container
+    image: louislam/uptime-kuma:latest  # Use the latest version of the louislam/uptime-kuma image
+    restart: on-failure:3  # Restart the container up to 3 times if it fails
+    ports:
+      - "5030:3001"  # Map port 5030 on the host to port 3001 in the container
+    volumes:
+      - "/var/lib/docker/volumes/sharedDockerFolder/_data/uptime-kuma:/app/data"  # Mount the host directory for Uptime Kuma data into the container
+      - /var/run/docker.sock:/var/run/docker.sock  # Mount the Docker socket to allow Uptime Kuma to interact with Docker
