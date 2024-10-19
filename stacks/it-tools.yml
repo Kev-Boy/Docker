@@ -1,6 +1,6 @@
 services:
     it-tools:  # The service name
-        container_name: it-tools  # The name of the container
+        container_name: git_it-tools  # The name of the container
         restart: on-failure:3  # Restart the container up to 3 times if it fails
         ports:
             - 7010:80  # Map port 7010 on the host to port 80 in the container
