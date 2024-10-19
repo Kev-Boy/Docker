@@ -1,16 +1,28 @@
-version: "3"
+name: homeassistant  # The name of the application
 
-name: homeassistant
-services:
-  homeassistant:
-    container_name: homeassistant
-    image: "homeassistant/home-assistant:stable"
-    ports:
-      - "8000:8123/tcp" # Port for Web-login
-    privileged: true
-    restart: on-failure:3
+services:  # Define the services that will run in the container
+  homeassistant:  # The service name
+    container_name: homeassistant  # The name of the container
+    image: "homeassistant/home-assistant:stable"  # The image to use for the container, specifying the stable version of Home Assistant
+#    ports: # Attention! If the network has external networks, the ports option will be ignored!
+#      - "8123:8123/tcp" # Map port 8000 on the host to port 8123 on the container, which is used for the web login interface
+    privileged: true  # Run the container in privileged mode
+    restart: on-failure:3  # Restart the container up to 3 times if it fails
     volumes:
-      - "/var/lib/docker/volumes/sharedDockerFolder/_data/homeassistant/data:/config"
-      - "/var/lib/docker/volumes/sharedDockerFolder/_data/homeassistant/media:/media"
+      - "/var/lib/docker/volumes/sharedDockerFolder/_data/homeassistant/data:/config"  # Mount the host directory for Home Assistant config data into the container
+      - "/var/lib/docker/volumes/sharedDockerFolder/_data/homeassistant/media:/media"  # Mount the host directory for Home Assistant media data into the container
     environment:
-      TZ: Europe/Berlin
+      TZ: Europe/Berlin  # Set the timezone for the container to Europe/Berlin
+    networks:
+      onlyVip: 
+        ipv4_address: 192.168.32.200  # Assign a static IP address on the onlyVip network
+      iotLocal:
+        ipv4_address: 192.168.96.200  # Assign a static IP address on the iotLocal network
+
+networks:  # Define the custom networks
+  onlyVip:
+    name: "mvl-500-onlyVIP-Creation"  # Name of the external network onlyVip
+    external: true  # Indicates that the network is managed outside of Docker Compose
+  iotLocal:
+    name: "mvl-x20-IoT-Local-Creation"  # Name of the external network iotLocal
+    external: true  # Indicates that the network is managed outside of Docker Compose
