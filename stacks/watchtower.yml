@@ -4,7 +4,7 @@ services:
     image: containrrr/watchtower  # Use the containrrr/watchtower image
     restart: on-failure:3  # Restart the container up to 3 times if it fails
     volumes:
-      - /var/lib/docker/volumes/sharedDockerFolder/_data/watchtower/docker.sock:/var/run/docker.sock  # Mount the Docker socket to allow Watchtower to interact with Docker
+      - /var/run/docker.sock:/var/run/docker.sock # Mount the Docker socket to allow Watchtower to interact with Docker
     environment:  # Environment variables for the container
       TZ: Europe/Berlin  # Set the timezone to Berlin
       WATCHTOWER_SCHEDULE: 0 0 3 * * *  # Schedule Watchtower to run at 3 AM every day
