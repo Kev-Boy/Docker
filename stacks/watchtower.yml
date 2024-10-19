@@ -1,13 +1,18 @@
 services:
   watchtower:
     container_name: git_watchtower  # The name of the container
-    image: containrrr/watchtower
-    restart: unless-stopped
+    image: containrrr/watchtower  # Use the containrrr/watchtower image
+    restart: on-failure:3  # Restart the container up to 3 times if it fails
     volumes:
-      - /var/lib/docker/volumes/sharedDockerFolder/_data/watchtower/docker.sock:/var/run/docker.sock
-    environment:
-      WATCHTOWER_SCHEDULE: 0 0 3 * * *
-      TZ: Europe/Berlin
-      WATCHTOWER_CLEANUP: "true"
-      WATCHTOWER_DEBUG: "true"
-      
+      - /var/lib/docker/volumes/sharedDockerFolder/_data/watchtower/docker.sock:/var/run/docker.sock  # Mount the Docker socket to allow Watchtower to interact with Docker
+    environment:  # Environment variables for the container
+      TZ: Europe/Berlin  # Set the timezone to Berlin
+      WATCHTOWER_SCHEDULE: 0 0 3 * * *  # Schedule Watchtower to run at 3 AM every day
+      WATCHTOWER_CLEANUP: true  # Clean up old images after updating
+      WATCHTOWER_DEBUG: false  # Disable debug mode
+      WATCHTOWER_INCLUDE_RESTARTING: true  # Include restarting containers in updates
+      WATCHTOWER_ROLLING_RESTART: true  # Enable rolling restarts
+      WATCHTOWER_TIMEOUT: "30s"  # Set the timeout for stopping containers
+      WATCHTOWER_LABEL_ENABLE: true  # Enable label filtering
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"  # Enable Watchtower for this container
