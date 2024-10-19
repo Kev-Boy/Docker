@@ -1,32 +1,34 @@
-version: "3"
+name: git_pihole  # The name of the application
 
-# Mehr Infos auf https://github.com/pi-hole/docker-pi-hole/ und https://docs.pi-hole.net/
-name: pihole
-services:
-  pihole:
-    container_name: pihole # Der Name des Containers wie er in Portainer unter "Containers" angezeigt wird
-    image: pihole/pihole:latest # Download des offiziellen Pihole-Images
-    ports: # Für DHCP wird empfohlen, die folgenden Ports zu entfernen und stattdessen hinzuzufügen: network_mode: "host"
+services:  # Define the services that will run in the container
+  pihole:  # The service name
+    container_name: git_pihole # The name of the container as it will appear in Portainer under "Containers"
+    image: pihole/pihole:latest # Download the official Pi-hole image
+    ports: 
+      # For DHCP, it is recommended to remove the following ports and instead add: network_mode: "host"
       - "53:53/tcp" # DNS Port
       - "53:53/udp"
-      # - "67:67/udp" # Wird nur benötigt, wenn ihr Pi-hole als DHCP-Server nutzen wollt
-      - "9010:80/tcp" # Port for Web-login
-    restart: always # Startet immer neu
-    volumes: # "Volumes" speichert Daten zwischen Container-Upgrades
-      - "/var/lib/docker/volumes/sharedDockerFolder/_data/pihole/config:/etc/pihole"
-      - "/var/lib/docker/volumes/sharedDockerFolder/_data/pihole/etc-dnsmasq.d:/etc/dnsmasq.d"
-    environment:
-      TZ: "Europe/Berlin" # Die Zeitzone wird auf Deutschland gestellt
-      PIHOLE_DNS_: "8.8.8.8;1.1.1.1" # Stellt in Pihole "Quad9 (filtered, DNSSEC)" als Upstream-DNS-Server ein statt Google
+      # - "67:67/udp" # Only needed if you want to use Pi-hole as a DHCP server
+      - "9010:80/tcp" # Port for web login
+    restart: unless-stopped  # Restart the container unless it is explicitly stopped
+    volumes:  # Volumes store data between container upgrades
+      - "/var/lib/docker/volumes/sharedDockerFolder/_data/pihole/config:/etc/pihole"  # Mount the host directory for Pi-hole config data into the container
+      - "/var/lib/docker/volumes/sharedDockerFolder/_data/pihole/etc-dnsmasq.d:/etc/dnsmasq.d"  # Mount the host directory for dnsmasq config data into the container
+    environment:  # Environment variables for the container
+      TZ: "Europe/Berlin" # Set the timezone to Germany
+      ServerIP: "192.168.178.20"  # The server IP address
+      # Cloudflare DNS servers
+      DNS1: "1.1.1.1"
+      DNS2: "1.0.0.1"
+      PIHOLE_DNS_: "1.1.1.1" # Set Quad9 (filtered, DNSSEC) as the upstream DNS server instead of Google
       REV_SERVER_TARGET: "192.168.178.1" # If conditional forwarding is enabled, set the IP of the local network router
-    hostname: Home-Server # Diese Bezeichnung steht später oben rechts in der Weboberfläche von Pihole als Hostname
-    dns:
-      - 127.0.0.1
-      - 8.8.8.8
-    # cap_add: # Wird nur benötigt, wenn ihr Pi-hole als DHCP-Server nutzen wollt
-    # - NET_ADMIN # Wird nur benötigt, wenn ihr Pi-hole als DHCP-Server nutzen wollt
+    hostname: Home-Server # This label will appear in the top right corner of the Pi-hole web interface as the hostname
+    dns:  # DNS servers to use
+      - 1.1.1.1
+      - 1.0.0.1
+    # cap_add: # Only needed if you want to use Pi-hole as a DHCP server
+    # - NET_ADMIN # Only needed if you want to use Pi-hole as a DHCP server
     env_file:
-      - stack.env
-    # Environment variables on Portainer to be filled:
-    # WEBPASSWORD: '<Passwort>' # Das Passwort, mit dem ihr euch an der Pihole-Weboberfläche anmeldet
-    
+      - stack.env  # File containing additional environment variables
+    # Environment variables to be filled in Portainer:
+    # WEBPASSWORD: '<password>' # The password to log into the Pi-hole web interface
