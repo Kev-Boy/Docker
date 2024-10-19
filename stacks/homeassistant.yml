@@ -1,8 +1,8 @@
-name: homeassistant  # The name of the application
+name: git_homeassistant  # The name of the application
 
 services:  # Define the services that will run in the container
   homeassistant:  # The service name
-    container_name: homeassistant  # The name of the container
+    container_name: git_homeassistant  # The name of the container
     image: "homeassistant/home-assistant:stable"  # The image to use for the container, specifying the stable version of Home Assistant
 #    ports: # Attention! If the network has external networks, the ports option will be ignored!
 #      - "8123:8123/tcp" # Map port 8000 on the host to port 8123 on the container, which is used for the web login interface
