@@ -28,7 +28,7 @@ services:  # Define the services that will run in the container
       - 1.0.0.1
     # cap_add: # Only needed if you want to use Pi-hole as a DHCP server
     # - NET_ADMIN # Only needed if you want to use Pi-hole as a DHCP server
-    env_file:
-      - ./stack.env  # File containing additional environment variables
+#    env_file:
+#      - ./stack.env  # File containing additional environment variables
     # Environment variables to be filled in Portainer:
     # WEBPASSWORD: '<password>' # The password to log into the Pi-hole web interface
