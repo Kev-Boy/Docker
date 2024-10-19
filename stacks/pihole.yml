@@ -26,7 +26,7 @@ services:
     # cap_add: # Wird nur benötigt, wenn ihr Pi-hole als DHCP-Server nutzen wollt
     # - NET_ADMIN # Wird nur benötigt, wenn ihr Pi-hole als DHCP-Server nutzen wollt
     env_file:
-      - ../stack.env
+      - stack.env
     # Environment variables on Portainer to be filled:
     # WEBPASSWORD: '<Passwort>' # Das Passwort, mit dem ihr euch an der Pihole-Weboberfläche anmeldet
     

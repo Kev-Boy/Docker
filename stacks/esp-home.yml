@@ -14,7 +14,7 @@ services:
     volumes:
       - "/var/lib/docker/volumes/sharedDockerFolder/_data/esp-home/config:/config"
     env_file:
-      - ../stack.env
+      - stack.env
 # Environment variables on Portainer to be filled:
 # USERNAME=<Username>
 # PASSWORD=<Passwort>

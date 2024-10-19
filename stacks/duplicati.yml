@@ -7,7 +7,7 @@ services:
     container_name: duplicati
     ports:
       - 5020:8200 # Port for Web-login
-    privileged: false # root rights
+    privileged: true # root rights
     restart: on-failure:3
     volumes:
       - /var/lib/docker/volumes/sharedDockerFolder/_data/duplicat/config/:/config
