@@ -28,17 +28,16 @@
 # For more extensive installation and update instructions, refer to the
 # documentation.
 
-version: "3.4"
-
-name: paperless-ngx
 services:
   broker:
+    container_name: git_paperless-ngx_brocker  # The name of the container
     image: docker.io/library/redis:7
     restart: on-failure:3
     volumes:
       - /var/lib/docker/volumes/sharedDockerFolder/_data/paperless/redisdata:/data
 
   db:
+    container_name: git_paperless-ngx_db  # The name of the container
     image: docker.io/library/postgres:15
     restart: on-failure:3
     volumes:
@@ -49,6 +48,7 @@ services:
       POSTGRES_PASSWORD: paperless
 
   webserver:
+    container_name: git_paperless-ngx_webserver  # The name of the container
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
     ports:
       - "7000:8000"

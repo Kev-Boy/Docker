@@ -1,9 +1,6 @@
-version: "3"
-
-name: esp-home
 services:
   esphome:
-    container_name: esp-home
+    container_name: git_esp-home
     image: esphome/esphome:stable
     ports:
       - "6053:6053/tcp" # Port for ESP-connection

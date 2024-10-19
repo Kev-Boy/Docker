@@ -1,10 +1,7 @@
-version: "3"
-
-name: duplicati
 services:
   duplicati: 
+    container_name: git_duplicati
     image: lscr.io/linuxserver/duplicati:latest
-    container_name: duplicati
     ports:
       - 5020:8200 # Port for Web-login
     privileged: true # root rights

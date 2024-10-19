@@ -1,9 +1,6 @@
-version: "3.9"
-
-name: mosquitto
 services:
   mosquitto:
-    container_name: "mosquitto"
+    container_name: git_mosquitto
     image: "eclipse-mosquitto"
     ports:
       - "1883:1883/tcp"

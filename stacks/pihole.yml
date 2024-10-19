@@ -1,5 +1,3 @@
-name: git_pihole  # The name of the application
-
 services:  # Define the services that will run in the container
   pihole:  # The service name
     container_name: git_pihole # The name of the container as it will appear in Portainer under "Containers"
