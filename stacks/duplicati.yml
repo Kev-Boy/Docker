@@ -2,10 +2,9 @@ services:
   duplicati: 
     container_name: git_duplicati
     image: lscr.io/linuxserver/duplicati:latest
-    privileged: true  # Run the container in privileged mode
     ports:
       - 5020:8200 # Port for Web-login
-    privileged: true # root rights
+    privileged: true # Run the container in privileged mode
     restart: on-failure:3
     volumes:
       - /var/lib/docker/volumes/sharedDockerFolder/_data/duplicat/config/:/config
