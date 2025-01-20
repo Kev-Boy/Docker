@@ -1,0 +1,30 @@
+services:
+  app:
+    container_name: git_nginx-proxy-manager # Name of the Nginx Proxy Manager container
+    image: "jc21/nginx-proxy-manager:latest" # Docker image to use for the container, latest version of Nginx Proxy Manager
+    ports:
+      - "80:80" # Map port 80 on the host to port 80 on the container (HTTP traffic)
+      - "9020:81" # Map port 81 on the container to port 9020 on the host (Admin interface)
+      - "443:443" # Map port 443 on the host to port 443 on the container (HTTPS traffic)
+    restart: on-failure:3 # Automatically restart the container up to 3 times in case of failure
+    volumes:
+      - "/var/lib/docker/volumes/sharedDockerFolder/_data/nginx/data2:/data" # Mount local directory to store Nginx data
+      - "/var/lib/docker/volumes/sharedDockerFolder/_data/nginx/letsencrypt:/etc/letsencrypt" # Mount directory for Let's Encrypt certificates
+    environment:
+      DB_MYSQL_HOST: "db" # Set the MySQL host to the service name 'db' (which is defined below)
+      DB_MYSQL_PORT: 3306 # Default MySQL port
+      DB_MYSQL_USER: "npm" # MySQL user for the database
+      DB_MYSQL_PASSWORD: "npm" # Password for the MySQL user
+      DB_MYSQL_NAME: "npm" # The name of the MySQL database used by Nginx Proxy Manager
+
+  db:
+    container_name: git_nginx-proxy-manager-db # Name of the MariaDB database container
+    image: "jc21/mariadb-aria:latest" # Docker image to use for the MariaDB database container
+    restart: on-failure:3 # Automatically restart the container up to 3 times in case of failure
+    volumes:
+      - "/var/lib/docker/volumes/sharedDockerFolder/_data/nginx/mysql:/var/lib/mysql" # Mount local directory for MariaDB's data storage
+    environment:
+      MYSQL_ROOT_PASSWORD: "npm" # Set the root password for the MySQL database
+      MYSQL_DATABASE: "npm" # Create a database named 'npm' upon initialization
+      MYSQL_USER: "npm" # Create a MySQL user with the specified name
+      MYSQL_PASSWORD: "npm" # Set the password for the MySQL user

@@ -1,0 +1,18 @@
+services:
+  vaultwarden:
+    container_name: vaultwarden # The name of the Vaultwarden container
+    image: vaultwarden/server:latest # Docker image to use for Vaultwarden, using the latest version
+    ports:
+      - 7030:80 # Map port 7030 on the host to port 80 on the container (HTTP traffic)
+        # You can replace 7030 with any port of your choice on the host machine
+    restart: on-failure:3 # Automatically restart the container up to 3 times if it fails
+    volumes:
+      - /var/lib/docker/volumes/sharedDockerFolder/_data/vaultwarden/vw-data:/data # Mount local directory for persistent Vaultwarden data
+        # You can change the path before the colon (:) if necessary
+    environment:
+      SIGNUPS_ALLOWED:
+        "false" # Disables user signups when set to "false"; use this once the admin account has been created
+        # This prevents unauthorized users from registering new accounts on the server
+        
+# Additional environment variable settings for using a reverse proxy (e.g., with Nginx or similar):
+# DOMAIN: "https://<your-domain.com>"  # Required when using a reverse proxy to specify the domain; Vaultwarden needs to know the domain and that it's using HTTPS for proper handling of attachments
